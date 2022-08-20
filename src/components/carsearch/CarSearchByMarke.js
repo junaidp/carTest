@@ -62,9 +62,7 @@ const CarSearchByMarke = (props) => {
             <input id='bauJahr' type='text'></input>
             <DropDown label = "Kraftstoffart" options ={optionsKraftstoffart} value  = {kraftstoffart}  onChange = {onKraftstoffart} />
             <DropDown label = "Leistung in kw/PS" options ={optionsKwps} value  = {kwps}  onChange = {onKwps} />
-            <label>Hubraum</label>
-            <input id='hubraum' type='text'></input>                 
-
+            
           
             <button type='submit'>Search</button>
             
