@@ -10,18 +10,23 @@ import {
   Link
 } from "react-router-dom";
 
+
+
 function App() {
-
   const [searchByTsn, setSearchByTsn] = useState(false);
-
+ 
   flagsmith.init({
-    environmentID:"5EyccitGtWdXsxXU5VmerP",
+    environmentID:"WtXojgLDfUpP9wXJwvRhJh",
     cacheFlags: true,
     enableAnalytics: true,
     onChange: (oldFlags, params) => {
       setSearchByTsn(flagsmith.hasFeature('search_by_tsn'));
     }
   });
+
+  function Home() {
+    return <CarSearch searchByTsn={searchByTsn}></CarSearch>;
+  }
 
   return (
     <Router>
@@ -44,9 +49,7 @@ function App() {
 );
 }
 
-function Home() {
-  return <CarSearch></CarSearch>;
-}
+
 
 
 function Login() {
