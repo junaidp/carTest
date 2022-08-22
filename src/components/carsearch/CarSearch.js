@@ -14,49 +14,34 @@ const CarSearch = (props) => {
   const [data, setData] = useState([])
   const [value, setValue] = React.useState(0);
 
-
   const fetchData = (data) => {
-    debugger
-    let url = `https://9979-213-196-213-232.ngrok.io/car?`;
-    if (data.herstellerNummer)
-      url += `hsn=${data.herstellerNummer}`;
-    if (data.typeNummer)
-      url += `tsn=${data.typeNummer}`;
-    if (data.marke)
-      url += `manufacture=${data.marke}`;
-
-    console.log("calling url", url)
-  
-    fetch(url)
-      .then((res) =>
-        res.json())
-      .then((response) => {
-        handleData(response);
-        //setData(response);
-      })
+  //let url = `https://9979-213-196-213-232.ngrok.io/car?`;
+    //if (data.herstellerNummer)
+     // url += `hsn=${data.herstellerNummer}`;
+    //if (data.typeNummer)
+     // url += `tsn=${data.typeNummer}`;
+    //if (data.marke)
+     // url += `manufacture=${data.marke}`;
+    console.log("calling url")
+    get().then((res) => {
+      //setData(res.map((el, index) => ({ id: index, ...el })));
+      // setData(res);
+      console.log(handleData(res));
+      setData(handleData(res))
+    });
   }
 
-  
-
+ 
   const handleData = (data = []) => {
     if (data.length > 0) {
       let res = data.map((el, index) => {
-        return el.id = index, el
+         el.id = index
+         return el;
       })
-      setData(res);
+      return res
     }
   }
 
-  useEffect(() => {
-    if (data.length > 0) {
-      let res = data.map((el, index) => {
-        return el.id = index, el
-      })
-      console.log("res", res);
-    }
-  }, [data])
-
-  console.log("data", data);
 
   const columns = [
     { field: 'constructionCode', headerName: 'Construction Code', width: 70 },
