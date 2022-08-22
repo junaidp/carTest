@@ -2,6 +2,8 @@ import React from 'react'
 
 const CarsList = (props) => {
     console.log(props.data);
+
+    
     
     return (
         <>
