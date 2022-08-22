@@ -2,6 +2,13 @@ import './App.css';
 import CarSearch from './components/carsearch/CarSearch.js'
 import flagsmith from 'flagsmith';
 import React, { useState } from 'react';
+import LoginPage from './components/LoginPage.js'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
 
 function App() {
 
@@ -17,16 +24,33 @@ function App() {
   });
 
   return (
-    <div className="App">
-      <header>
-        KFZ
-      </header>
-      <CarSearch searchByTsn ={searchByTsn}></CarSearch>
-      <footer>
-
-      </footer>
+    <Router>
+    <div>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+        
+        </ul>
+      </nav>
+      <Routes>
+        
+         <Route exact path="/" element={<Home/>}/>
+         <Route exact path="/login" element={<Login/>}/>
+      </Routes>
     </div>
-  );
+  </Router>
+);
+}
+
+function Home() {
+  return <CarSearch></CarSearch>;
+}
+
+
+function Login() {
+  return <LoginPage></LoginPage>
 }
 
 export default App;
