@@ -1,28 +1,18 @@
-import { Button, Paper } from '@mui/material'
-import React, { useState, useEffect } from 'react'
-import CustomInput from '../customComponents/CustomInput'
+import React, { useState , useEffect} from 'react'
 
-const CarSearchByTsn = ({ handleSubmit }) => {
-
-    const [form, setForm] = useState({
-        herstellerNummer: '',
-        typeNummer: ''
-    })
-
-    const handleChange = (event) => {
-        setForm({ ...form, [event.target.name]: event.target.value })
-    }
+const CarSearchByTsn = (props) => {
 
     return (
         <>
-            <Paper className="main-container">
-                <CustomInput type="text" title="Herstellernummer" name="herstellerNummer" value={form.herstellerNummer} handleChange={handleChange} />
-                <CustomInput type="text" title="Typschlüsselnummer" name="typeNummer" value={form.typeNummer} handleChange={handleChange} />
-            </Paper>
-
-            <div style={{ textAlign: 'left', margin: '10px' }}>
-                <Button variant="outlined" onClick={() => handleSubmit(form)}>Search</Button>
-            </div>
+           <form onSubmit={props.onSubmit} >
+           <label>Herstellernummer</label>
+            <input id='herstellerNummer' type='text'></input>
+            <label>Typschlüsselnummer</label>
+            <input id='typeNummer' type='text'></input>
+           
+            <button type='submit'>Search</button>
+            
+            </form>  
         </>
     )
 }
