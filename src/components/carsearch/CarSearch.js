@@ -5,7 +5,8 @@ import CustomDataTable from '../customComponents/CustomGrid';
 import CarSearchByMarke from './CarSearchByMarke';
 import CarSearchByTsn from './CarSearchByTsn';
 
-const CarSearch = () => {
+
+const CarSearch = (props) => {
 
   const { get } = Service;
   //const URL = 'https://jsonplaceholder.typicode.com/posts';
@@ -14,6 +15,13 @@ const CarSearch = () => {
   const [value, setValue] = React.useState(0);
 
   const fetchData = (data) => {
+  //let url = `https://9979-213-196-213-232.ngrok.io/car?`;
+    //if (data.herstellerNummer)
+     // url += `hsn=${data.herstellerNummer}`;
+    //if (data.typeNummer)
+     // url += `tsn=${data.typeNummer}`;
+    //if (data.marke)
+     // url += `manufacture=${data.marke}`;
     console.log("calling url")
     get().then((res) => {
       //setData(res.map((el, index) => ({ id: index, ...el })));
@@ -23,6 +31,7 @@ const CarSearch = () => {
     });
   }
 
+ 
   const handleData = (data = []) => {
     if (data.length > 0) {
       let res = data.map((el, index) => {
@@ -32,6 +41,7 @@ const CarSearch = () => {
       return res
     }
   }
+
 
   const columns = [
     { field: 'constructionCode', headerName: 'Construction Code', width: 70 },
@@ -62,16 +72,16 @@ const CarSearch = () => {
 
   return (
     <Card>
-      <div style={{ padding: 10 }}>
+      <div style={{ padding:10 }}>
         <h2>Dein Fahrzeug</h2>
         <Tabs value={value} onChange={handleChange} centered>
           <Tab label="Fahrzeugschein" />
-          <Tab label="Ahrzeugschein" />
+          <Tab label="Ahrzeugschein" style={{ display: props.searchByTsn ? "" : "none"}}/>
         </Tabs>
         <TabPanel value={value} index={0}>
           <CarSearchByMarke handleSubmit={fetchData} />
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        <TabPanel value={value} index={1} >
           <CarSearchByTsn handleSubmit={fetchData} />
         </TabPanel>
         {/* <CarsList data={data}></CarsList> */}
