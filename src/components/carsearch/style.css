@@ -1,0 +1,19 @@
+.main-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+    grid-gap: 15px;
+}
+
+
+.main-container>div>input {
+    margin-top: 4px
+}
+
+.main-container>div>div>input {
+    margin-top: 4px ;
+}
+
+.main-container>div,
+.main-container>label {
+    text-align: left;
+}
