@@ -1,6 +1,8 @@
 import { Box, Card, Chip, Tab, Tabs } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Service from '../../service';
+import { selectedCars, setCarsToState } from '../../store/reducers/search-car';
 import CustomDataTable from '../customComponents/CustomGrid';
 import CarSearchByMarke from './CarSearchByMarke';
 import CarSearchByTsn from './CarSearchByTsn';
@@ -9,39 +11,27 @@ import CarSearchByTsn from './CarSearchByTsn';
 const CarSearch = (props) => {
 
   const { get } = Service;
-  //const URL = 'https://jsonplaceholder.typicode.com/posts';
-
-  const [data, setData] = useState([])
-  const [value, setValue] = React.useState(0);
+  const [tabValue, setTabValue] = useState(0);
+  const dispatch = useDispatch();
+  const { cars } = useSelector(selectedCars);
 
   const fetchData = (data) => {
-  //let url = `https://9979-213-196-213-232.ngrok.io/car?`;
-    //if (data.herstellerNummer)
-     // url += `hsn=${data.herstellerNummer}`;
-    //if (data.typeNummer)
-     // url += `tsn=${data.typeNummer}`;
-    //if (data.marke)
-     // url += `manufacture=${data.marke}`;
     console.log("calling url")
-    get().then((res) => {
-      //setData(res.map((el, index) => ({ id: index, ...el })));
-      // setData(res);
+    get(data).then((res) => {
       console.log(handleData(res));
-      setData(handleData(res))
+      dispatch(setCarsToState(handleData(res)));
     });
   }
 
- 
   const handleData = (data = []) => {
     if (data.length > 0) {
       let res = data.map((el, index) => {
-         el.id = index
-         return el;
+        el.id = index
+        return el;
       })
       return res
     }
   }
-
 
   const columns = [
     { field: 'constructionCode', headerName: 'Construction Code', width: 70 },
@@ -65,27 +55,27 @@ const CarSearch = (props) => {
     },
   ];
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
   };
 
-
+  console.log("cars", cars);
   return (
     <Card>
-      <div style={{ padding:10 }}>
+      <div style={{ padding: 10 }}>
         <h2>Dein Fahrzeug</h2>
-        <Tabs value={value} onChange={handleChange} centered>
+        <Tabs value={tabValue} onChange={handleTabChange} centered>
           <Tab label="Fahrzeugschein" />
-          <Tab label="Ahrzeugschein" style={{ display: props.searchByTsn ? "" : "none"}}/>
+          <Tab label="Ahrzeugschein" style={{ display: props.searchByTsn ? "" : "none" }} />
         </Tabs>
-        <TabPanel value={value} index={0}>
+        <TabPanel value={tabValue} index={0}>
           <CarSearchByMarke handleSubmit={fetchData} />
         </TabPanel>
-        <TabPanel value={value} index={1} >
+        <TabPanel value={tabValue} index={1} >
           <CarSearchByTsn handleSubmit={fetchData} />
         </TabPanel>
         {/* <CarsList data={data}></CarsList> */}
-        {data.length > 0 ? <CustomDataTable data={data} columns={columns} /> : <><Chip label="No Record Found" /></>}
+        {cars.length > 0 ? <CustomDataTable data={cars} columns={columns} /> : <><Chip label="No Record Found" /></>}
       </div>
     </Card>
 
