@@ -13,76 +13,25 @@ const CarSearch = () => {
   const [data, setData] = useState([])
   const [value, setValue] = React.useState(0);
 
-  // const fetchData = () => {
-  //   console.log("calling url")
-  //   get().then((res) => {
-  //     setData(res);
-  //     console.log("response", res);
-  //   });
-  // }
-
-
-
-  // const onSubmit = (event) => {
-  //   //event.preventDefault();
-  //   fetchData();
-
-  //   //   //const URL = 'https://jsonplaceholder.typicode.com/posts';
-
-  //   const URL = 'https://9979-213-196-213-232.ngrok.io/car?hsn=1679&tsn=214&vehicleType=PASSENGER_CAR&manufacture=volvo&fuelType=BENZIN&enginePowerRange=RANGE_0_TO_50KW&carType=LIMOUSINE&tradeName=trade&maxHits=1';
-  //   // const [data, setData] = useState([])
-  //   // const [selection, setSelection] = useState([])
-
-  // }
-
   const fetchData = (data) => {
-    debugger
-    let url = `https://9979-213-196-213-232.ngrok.io/car?`;
-    //console.log("calling url", data)
-    if (data.herstellerNummer)
-      url += `hsn=${data.herstellerNummer}`;
-    if (data.typeNummer)
-      url += `tsn=${data.typeNummer}`;
-    if (data.marke)
-      url += `manufacture=${data.marke}`;
-    fetch(url)
-      .then((res) =>
-        res.json())
-      .then((response) => {
-        handleData(response);
-        //setData(response);
-      })
+    console.log("calling url")
+    get().then((res) => {
+      //setData(res.map((el, index) => ({ id: index, ...el })));
+      // setData(res);
+      console.log(handleData(res));
+      setData(handleData(res))
+    });
   }
-
 
   const handleData = (data = []) => {
     if (data.length > 0) {
       let res = data.map((el, index) => {
-        return el.id = index, el
+         el.id = index
+         return el;
       })
-      setData(res);
+      return res
     }
   }
-
-  useEffect(() => {
-    if (data.length > 0) {
-      let res = data.map((el, index) => {
-        return el.id = index, el
-      })
-      console.log("res", res);
-    }
-  }, [data])
-
-  //   const handleData = (data = []) => {
-  //     debugger
-  //    
-  //     console.log(res);
-  // }
-
-
-  console.log("data", data);
-
-
 
   const columns = [
     { field: 'constructionCode', headerName: 'Construction Code', width: 70 },
@@ -105,19 +54,6 @@ const CarSearch = () => {
       width: 90,
     },
   ];
-
-  const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  ];
-
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
